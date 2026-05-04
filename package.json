@@ -4,6 +4,7 @@
   "description": "Disclaimer: This is a prototype system and only meant for educational purposes.",
   "main": "index.js",
   "scripts": {
+    "start": "node project/server.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
