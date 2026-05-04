@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>CSC Form</title>
+
+    <!-- Font style: Poppins -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Style -->
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+    </style>
+</head>
+
+<!-- BODY -->
+<!-- background -->
+
+<body class="bg-gray-100 p-10">
+
+    <!-- form -->
+    <div class="max-w-lg mx-auto bg-white p-8 rounded shadow">
+
+        <!-- title -->
+        <h1 class="text-2xl font-bold mb-6">CSC Form 212</h1>
+
+        <!-- personal information -->
+        <h2 class="font-semibold mb-2">Personal Information</h2>
+        <input id="surName" placeholder="Surname" class="w-full border p-2 rounded mb-3" />
+        <input id="firstName" placeholder="First Name" class="w-full border p-2 rounded mb-3" />
+        <input id="middleName" placeholder="Middle Name" class="w-full border p-2 rounded mb-3" />
+        <input id="nameExtension" placeholder="Name Extension (Jr, Sr)" class="w-full border p-2 rounded mb-3" />
+
+        <h2 class="font-semibold mb-2 mt-4">Educational Background</h2>
+        <input id="educLevel" placeholder="Education Level" class="w-full border p-2 rounded mb-3" />
+        <input id="schoolName" placeholder="School Name" class="w-full border p-2 rounded mb-3" />
+        <input id="degreeCourse" placeholder="Degree/Course" class="w-full border p-2 rounded mb-3" />
+
+        <button onclick="submitForm()" class="w-full bg-blue-600 text-white p-2 rounded hover:bg-blue-700">
+            Submit
+        </button>
+
+        <p id="message" class="mt-4 text-center text-green-600"></p>
+    </div>
+
+    <!-- javascript for fetching data -->
+    <script>
+        async function submitForm() {
+            const data = {
+                surName: document.getElementById('surName').value,
+                firstName: document.getElementById('firstName').value,
+                middleName: document.getElementById('middleName').value,
+                nameExtension: document.getElementById('nameExtension').value,
+                educLevel: document.getElementById('educLevel').value,
+                schoolName: document.getElementById('schoolName').value,
+                degreeCourse: document.getElementById('degreeCourse').value,
+            };
+
+            try {
+                const res = await fetch('http://localhost:3000/api/submit', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(data)
+                });
+
+                // basic ui/ux to show if the form was submitted successfully or not
+                const result = await res.json();
+                // if res.ok means the form was submitted successfully
+                if (res.ok) {
+                    document.getElementById('message').textContent = result.message;
+                    document.getElementById('message').className = "mt-4 text-center text-green-600";
+
+                    // clear inputs after successful submission
+                    document.querySelectorAll('input').forEach(input => input.value = '');
+                } else {
+                    document.getElementById('message').textContent = "Error: " + (result.error || "Unknown error occurred.");
+                    document.getElementById('message').className = "mt-4 text-center text-red-600";
+                }
+            } catch (err) {
+                // error catching
+                document.getElementById('message').textContent = "Error: Could not connect to server.";
+                document.getElementById('message').className = "mt-4 text-center text-red-600";
+            }
+        }
+    </script>
+
+</body>
+
+</html>
