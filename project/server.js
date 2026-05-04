@@ -35,7 +35,7 @@ db.getConnection((err, connection) => {
     }
 });
 
-// submit form
+// submit form queries
 app.post('/api/submit', (req, res) => {
     const { surName, firstName, middleName, nameExtension, educLevel, schoolName, degreeCourse } = req.body;
 
@@ -53,5 +53,8 @@ app.post('/api/submit', (req, res) => {
         });
     });
 });
+
+// our port
+// using render.com
 const port = process.env.PORT || 3000;
 app.listen(port, () => console.log('Server running on port ' + port));
