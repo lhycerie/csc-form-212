@@ -41,6 +41,7 @@ flowchart LR
     class Render server;
     class CleverCloud db;
 ```
+(Graph from Mermaid Chart for documentation)
 
 1. **Frontend (Vercel):** The front (`index.html`). Receives user input and uses the JavaScript `fetch` API to send data. Hosted on Vercel.
 2. **Backend (Render):** The backend (`server.js`). Receives HTTP POST requests on `/api/submit`. Parses JSON, structures SQL queries, and communicates with the DB using credentials.
